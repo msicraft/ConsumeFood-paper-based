@@ -1,6 +1,6 @@
 # ConsumeFood
-Consume Food Plugin
-
+Consume Food plugin rewritten based on paper
+Version 1.5 or higher was written based on the paper
 
 # Plugin Description
 
