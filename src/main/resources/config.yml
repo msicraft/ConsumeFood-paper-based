@@ -1,0 +1,181 @@
+# config / Default Config = https://github.com/msicraft/ConsumeFood/blob/master/src/config.yml
+###############
+#    config   #
+###############
+# Set FoodLevel and Saturation values
+# default value = minecraft value
+#
+# Max Settings can change the maximum food level and duration.
+# MaxSetting default value
+# MaxSetting:
+#   FoodLevel = 20
+#   Saturation = 20.0
+#
+# If you set Enabled to false in MaxSetting, the maximum value of FoodLevel and Saturation is 20.
+# If the value exceeds 20, the maximum value is applied.
+# FoodLevel is applied as an integer value (ex. A value of 4.5 is applied as 4)
+#
+# PotionEffect:
+#   - PotionType:<level>:<seconds>
+#   PotionType = PotionType can be found in potiontype.yml
+#   Chance is the probability that the PotionEffect will be applied
+#   Chance can be a value between 0 and 1.  0.1 = 10%, 1 = 100%
+#
+#  If you want to get rid of PotionEffect, Just delete the PotionEffect field blank.
+#
+config-version: 2  # Don't Touch This
+
+
+MaxSetting:
+  FoodLevel: 20
+  Saturation: 20.0
+
+# If Max_Consumable is true, it allows you to eat food with a right click when the food level is 20 or higher.
+# But this doesn't play the food eating animation. So you can set cooldown.
+Max_Consumable:
+  Enabled: false
+  Cooldown: 3
+
+Buff-Debuff_Food:
+  ENCHANTED_GOLDEN_APPLE:
+    FoodLevel: 4
+    Saturation: 9.6
+    PotionEffect:
+      - ABSORPTION:4:120
+      - REGENERATION:2:20
+      - FIRE_RESISTANCE:1:300
+      - RESISTANCE:1:300
+    Chance: 1
+  GOLDEN_APPLE:
+    FoodLevel: 4
+    Saturation: 9.6
+    PotionEffect:
+      - ABSORPTION:1:120
+      - REGENERATION:2:5
+    Chance: 1
+  PUFFERFISH:
+    FoodLevel: 1
+    Saturation: 0.2
+    PotionEffect:
+      - HUNGER:3:15
+      - POISON:2:60
+      - NAUSEA:1:15
+    Chance: 1
+  POISONOUS_POTATO:
+    FoodLevel: 2
+    Saturation: 1.2
+    PotionEffect:
+      - POISON:2:5
+    Chance: 0.6
+  ROTTEN_FLESH:
+    FoodLevel: 4
+    Saturation: 0.8
+    PotionEffect:
+      - HUNGER:1:30
+    Chance: 0.8
+  SPIDER_EYE:
+    FoodLevel: 2
+    Saturation: 3.2
+    PotionEffect:
+      - POISON:1:4
+    Chance: 1
+
+
+Food:
+  APPLE:
+    FoodLevel: 4
+    Saturation: 2.4
+  BEEF:
+    FoodLevel: 3
+    Saturation: 1.8
+  BEETROOT:
+    FoodLevel: 1
+    Saturation: 1.2
+  BAKED_POTATO:
+    FoodLevel: 5
+    Saturation: 6
+  BREAD:
+    FoodLevel: 5
+    Saturation: 6
+  BEETROOT_SOUP:
+    FoodLevel: 6
+    Saturation: 7.2
+  CHICKEN:
+    FoodLevel: 2
+    Saturation: 1.2
+  COD:
+    FoodLevel: 2
+    Saturation: 0.4
+  CARROT:
+    FoodLevel: 3
+    Saturation: 3.6
+  COOKED_CHICKEN:
+    FoodLevel: 6
+    Saturation: 7.2
+  COOKED_RABBIT:
+    FoodLevel: 5
+    Saturation: 6
+  COOKED_PORKCHOP:
+    FoodLevel: 8
+    Saturation: 12.8
+  COOKED_BEEF:
+    FoodLevel: 8
+    Saturation: 12.8
+  COOKED_MUTTON:
+    FoodLevel: 6
+    Saturation: 9.6
+  COOKED_COD:
+    FoodLevel: 5
+    Saturation: 6
+  COOKED_SALMON:
+    FoodLevel: 6
+    Saturation: 9.6
+  COOKIE:
+    FoodLevel: 2
+    Saturation: 0.5
+  DRIED_KELP:
+    FoodLevel: 1
+    Saturation: 0.6
+  GLOW_BERRIES:  # Only available 1.17+
+    FoodLevel: 2
+    Saturation: 0.4
+  GOLDEN_CARROT:
+    FoodLevel: 6
+    Saturation: 14.4
+  HONEY_BOTTLE:
+    FoodLevel: 6
+    Saturation: 1.2
+  MUTTON:
+    FoodLevel: 2
+    Saturation: 1.2
+  MELON_SLICE:
+    FoodLevel: 2
+    Saturation: 1.2
+  MUSHROOM_STEW:
+    FoodLevel: 6
+    Saturation: 7.2
+  POTATO:
+    FoodLevel: 1
+    Saturation: 0.6
+  PORKCHOP:
+    FoodLevel: 3
+    Saturation: 0.6
+  PUMPKIN_PIE:
+    FoodLevel: 8
+    Saturation: 4.8
+  RABBIT:
+    FoodLevel: 2
+    Saturation: 1.2
+  RABBIT_STEW:
+    FoodLevel: 10
+    Saturation: 12
+  SALMON:
+    FoodLevel: 2
+    Saturation: 0.2
+  SWEET_BERRIES:
+    FoodLevel: 1
+    Saturation: 0
+  TROPICAL_FISH:
+    FoodLevel: 1
+    Saturation: 0.2
+

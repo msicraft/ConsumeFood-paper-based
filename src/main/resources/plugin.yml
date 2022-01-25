@@ -1,0 +1,47 @@
+name: ConsumeFood
+version: '${project.version}'
+main: com.msicraft.consumefood.ConsumeFood
+api-version: 1.15
+authors: [ msicraft ]
+description: Consume Food Plugin
+commands:
+  hunger:
+    description: Set Player Hunger
+    usage: /<command>
+    permission: consumefood.sethunger
+    permission-message: You do not have permission!
+  saturation:
+    description:  Set Player Saturation
+    usage: /<command>
+    permission: consumefood.setsaturation
+    permission-message: You do not have permission!
+  consumefoodreload:
+    description:  Reloaded Consume Food Plugin Config
+    usage: /<command>
+    permission: consumefood.reload
+    permission-message: You do not have permission!
+  gethunger:
+    description: Get Player Hunger
+    usage: /<command>
+    permission: consumefood.gethunger
+    permission-message: You do not have permission!
+  getsaturation:
+    description:  Get Player Saturation
+    usage:  /<command>
+    permission: consumefood.getsaturation
+    permission-message: You do not have permission!
+  consumefood:
+    description: dd
+    usage: /<command>
+    permission: consumefood.consumefood
+    permission-message: You do not have permission!
+permissions:
+  consumefood.reload:
+    description: Allow [Consume Food] Plugin Config reload Command
+    default: op
+  consumefood.sethunger:
+    description: Allow [Consume Food] Plugin Hunger Command
+    default: op
+  consumefood.setsaturation:
+    description: Allow [Consume Food] Plugin Saturation Command
+    default: op
