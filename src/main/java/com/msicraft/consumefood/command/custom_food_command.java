@@ -1,11 +1,11 @@
 package com.msicraft.consumefood.command;
 
-import com.destroystokyo.paper.Namespaced;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
-import com.google.common.collect.Lists;
 import com.msicraft.consumefood.ConsumeFood;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,9 +15,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
-import java.io.IOError;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 
 public class custom_food_command implements CommandExecutor {
@@ -44,17 +45,17 @@ public class custom_food_command implements CommandExecutor {
             if (args.length == 3) {
                 String internal_name = args[1];
                 int amount = Integer.parseInt(args[2]);
-                ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
-                SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
                 String name = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".name");
                 String value = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".value");
-                UUID uuid = UUID.fromString(Objects.requireNonNull(ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".uuid")));
                 ArrayList<String> lore = new ArrayList<>();
                 List<String> lore_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".lore");
                 Material material = Material.valueOf(ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material"));
-                PlayerProfile playerprofile = Bukkit.createProfile(uuid, name);
                 if (Material.PLAYER_HEAD.equals(material)) {
                     if (value != null) {
+                        ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+                        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+                        UUID uuid = UUID.fromString(Objects.requireNonNull(ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".uuid")));
+                        PlayerProfile playerprofile = Bukkit.createProfile(uuid, name);
                         playerprofile.setProperty(new ProfileProperty("textures", value));
                         skullMeta.setPlayerProfile(playerprofile);
                         if (name == null) {

@@ -3,7 +3,6 @@ package com.msicraft.consumefood.events;
 import com.msicraft.consumefood.ConsumeFood;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -32,7 +31,12 @@ public class Custom_Food_Block_Place implements Listener {
         }
         if (block_material == Material.PLAYER_HEAD && item_lore != null && lore.containsAll(item_lore)) {
             e.setCancelled(true);
+        } else {
+            if (block_material == Material.PLAYER_WALL_HEAD && item_lore != null && lore.containsAll(item_lore)) {
+                e.setCancelled(true);
+            }
         }
+
     }
 
 

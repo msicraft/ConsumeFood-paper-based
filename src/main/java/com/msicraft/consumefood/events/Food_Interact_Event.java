@@ -20,7 +20,6 @@ import java.util.Random;
 public class Food_Interact_Event implements Listener {
 
     Plugin plugin = ConsumeFood.getPlugin(ConsumeFood.class);
-
     Map<String, Long> cooldowns = new HashMap<String, Long>();
     Random randomchance = new Random();
 
