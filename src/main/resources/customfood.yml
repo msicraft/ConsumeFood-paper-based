@@ -1,7 +1,7 @@
 # Custom Food
 # If a value exists when creating custom food with player_head,
 # a uuid is automatically generated when plugin is loaded or when using the reload command.
-#
+# Do not modify the created uuid (Changing the uuid will not merge with anything created before the change.)
 Custom_Food:
   food_1:
     material: APPLE
@@ -24,6 +24,7 @@ Custom_Food:
     Saturation: 2.2
     potion-effect:
       - ABSORPTION:4:120
+    Chance: 1
 
   food_3:
     material: CARROT
@@ -36,3 +37,4 @@ Custom_Food:
     potion-effect:
       - ABSORPTION:1:10
       - REGENERATION:1:10
+    Chance: 0.3

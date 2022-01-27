@@ -6,6 +6,7 @@ import com.msicraft.consumefood.ConsumeFood;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,18 +14,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+
+import static org.bukkit.Material.APPLE;
 
 
 public class custom_food_command implements CommandExecutor {
 
     Plugin plugin = ConsumeFood.getPlugin(ConsumeFood.class);
-
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -49,7 +50,8 @@ public class custom_food_command implements CommandExecutor {
                 String value = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".value");
                 ArrayList<String> lore = new ArrayList<>();
                 List<String> lore_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".lore");
-                Material material = Material.valueOf(ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material"));
+                String get_material = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material");
+                Material material = Material.valueOf(get_material);
                 if (Material.PLAYER_HEAD.equals(material)) {
                     if (value != null) {
                         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
@@ -58,6 +60,7 @@ public class custom_food_command implements CommandExecutor {
                         PlayerProfile playerprofile = Bukkit.createProfile(uuid, name);
                         playerprofile.setProperty(new ProfileProperty("textures", value));
                         skullMeta.setPlayerProfile(playerprofile);
+                        PersistentDataContainer custom_food_skull = skullMeta.getPersistentDataContainer();
                         if (name == null) {
                             skullMeta.setDisplayName("");
                         } else {
@@ -65,6 +68,10 @@ public class custom_food_command implements CommandExecutor {
                         }
                         for (String s : lore_list) {
                             lore.add(ChatColor.translateAlternateColorCodes('&', s));
+                        }
+                        if (!(custom_food_skull.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING))) {
+                            custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
+                            custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food");
                         }
                         skullMeta.setLore(lore);
                         skull.setItemMeta(skullMeta);
@@ -75,6 +82,7 @@ public class custom_food_command implements CommandExecutor {
                 } else {
                     ItemStack custom_food = new ItemStack(material, 1);
                     ItemMeta custom_food_meta = custom_food.getItemMeta();
+                    PersistentDataContainer custom_food_id = custom_food_meta.getPersistentDataContainer();
                     if (name == null) {
                         custom_food_meta.setDisplayName("");
                     } else {
@@ -82,6 +90,10 @@ public class custom_food_command implements CommandExecutor {
                     }
                     for (String s : lore_list) {
                         lore.add(ChatColor.translateAlternateColorCodes('&', s));
+                    }
+                    if (!(custom_food_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"),PersistentDataType.STRING))) {
+                        custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
+                        custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food");
                     }
                     custom_food_meta.setLore(lore);
                     custom_food.setItemMeta(custom_food_meta);

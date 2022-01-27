@@ -27,6 +27,10 @@ public class ConsumeFood extends JavaPlugin {
 
     public static CustomFood_Data customfooddata;
 
+    public static ConsumeFood getPlugin() {
+        return plugin;
+    }
+
 
     public static Set<String> foodnamelist() {
         Set<String> foodname = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("Food")).getKeys(false);

@@ -2,20 +2,22 @@ package com.msicraft.consumefood.events;
 
 import com.msicraft.consumefood.ConsumeFood;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Food_Interact_Event implements Listener {
 
@@ -43,18 +45,24 @@ public class Food_Interact_Event implements Listener {
         if (max_consumable) {
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 if (foodnlist.contains(itemstack) || buffdebufffoodlist.contains(itemstack)) {
-                    if (cooldowns.containsKey(player.getName()) && p_food_level >= 20) {
-                        if (cooldowns.get(player.getName()) > System.currentTimeMillis()) {
-                            long timeleft = (cooldowns.get(player.getName()) - System.currentTimeMillis()) / 1000;
-                            if (cooldown_path != null) {
-                                cooldown_path = cooldown_path.replaceAll("%time_left%", String.valueOf(timeleft));
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
+                    ItemStack get_item = e.getItem();
+                    ItemMeta get_item_meta = Objects.requireNonNull(get_item).getItemMeta();
+                    PersistentDataContainer get_item_id = get_item_meta.getPersistentDataContainer();
+                    boolean check_item_id = get_item_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING);
+                    if (!check_item_id) {
+                        if (cooldowns.containsKey(player.getName()) && p_food_level >= 20) {
+                            if (cooldowns.get(player.getName()) > System.currentTimeMillis()) {
+                                long timeleft = (cooldowns.get(player.getName()) - System.currentTimeMillis()) / 1000;
+                                if (cooldown_path != null) {
+                                    cooldown_path = cooldown_path.replaceAll("%time_left%", String.valueOf(timeleft));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
+                                }
+                                return;
                             }
-                            return;
                         }
+                        cooldowns.put(player.getName(), System.currentTimeMillis() + (cooldown * 1000));
                     }
-                    cooldowns.put(player.getName(), System.currentTimeMillis() + (cooldown * 1000));
-                    if (foodnlist.contains(itemstack) && p_food_level >= 20) {
+                    if (foodnlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
                         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
                             player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
                             player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
@@ -67,7 +75,7 @@ public class Food_Interact_Event implements Listener {
                             player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                         }
                     } else {
-                        if (buffdebufffoodlist.contains(itemstack) && p_food_level >= 20) {
+                        if (buffdebufffoodlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
                             if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
                                 player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
                                 player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Saturation")));
@@ -111,14 +119,14 @@ public class Food_Interact_Event implements Listener {
                     }
                     if (player.getFoodLevel() >= max_food_level) {
                         player.setFoodLevel(max_food_level);
-                        if (max_foodlevel_path != null) {
+                        if (max_foodlevel_path != null && !check_item_id) {
                             max_foodlevel_path = max_foodlevel_path.replaceAll("%max_foodlevel%", String.valueOf(max_food_level));
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', max_foodlevel_path));
                         }
                     }
                     if (player.getSaturation() >= max_saturation) {
                         player.setSaturation(max_saturation);
-                        if (max_saturation_path != null) {
+                        if (max_saturation_path != null && !check_item_id) {
                             max_saturation_path = max_saturation_path.replaceAll("%max_saturation%", String.valueOf(max_saturation));
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', max_saturation_path));
                         }
