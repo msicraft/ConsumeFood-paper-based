@@ -14,6 +14,7 @@ public class HungerCommand implements CommandExecutor {
     Plugin plugin = ConsumeFood.getPlugin(ConsumeFood.class);
 
 
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         int maxfoodlevel = plugin.getConfig().getInt("MaxSetting.FoodLevel");

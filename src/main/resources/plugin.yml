@@ -45,3 +45,4 @@ permissions:
   consumefood.setsaturation:
     description: Allow [Consume Food] Plugin Saturation Command
     default: op
+

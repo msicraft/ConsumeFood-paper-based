@@ -24,6 +24,7 @@
 #
 #  If you want to get rid of PotionEffect, Just delete the PotionEffect field blank.
 #
+
 config-version: 2  # Don't Touch This
 
 
