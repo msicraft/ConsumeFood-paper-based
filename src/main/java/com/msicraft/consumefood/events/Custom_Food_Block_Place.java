@@ -18,22 +18,25 @@ public class Custom_Food_Block_Place implements Listener {
 
     @EventHandler
     public void Custom_Food_Place(BlockPlaceEvent e) {
-        Material block_material = e.getBlockPlaced().getBlockData().getMaterial();
-        ItemStack get_item = e.getItemInHand();
-        ArrayList<String> customfoodlist = new ArrayList<>(ConsumeFood.custom_food_list());
-        ArrayList<String> lore = new ArrayList<>();
-        List<String> item_lore = get_item.getLore();
-        for (String internal_name : customfoodlist) {
-            List<String> lore_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".lore");
-            for (String s : lore_list) {
-                lore.add(ChatColor.translateAlternateColorCodes('&', s));
+        boolean custom_food_block_place = ConsumeFood.customfooddata.getConfig().getBoolean("Custom_Food_Block_Place.Enabled");
+        if (!custom_food_block_place) {
+            Material block_material = e.getBlockPlaced().getBlockData().getMaterial();
+            ItemStack get_item = e.getItemInHand();
+            ArrayList<String> customfoodlist = new ArrayList<>(ConsumeFood.custom_food_list());
+            ArrayList<String> lore = new ArrayList<>();
+            List<String> item_lore = get_item.getLore();
+            for (String internal_name : customfoodlist) {
+                List<String> lore_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".lore");
+                for (String s : lore_list) {
+                    lore.add(ChatColor.translateAlternateColorCodes('&', s));
+                }
             }
-        }
-        if (block_material == Material.PLAYER_HEAD && item_lore != null && lore.containsAll(item_lore)) {
-            e.setCancelled(true);
-        } else {
-            if (block_material == Material.PLAYER_WALL_HEAD && item_lore != null && lore.containsAll(item_lore)) {
+            if (block_material == Material.PLAYER_HEAD && item_lore != null && lore.containsAll(item_lore)) {
                 e.setCancelled(true);
+            } else {
+                if (block_material == Material.PLAYER_WALL_HEAD && item_lore != null && lore.containsAll(item_lore)) {
+                    e.setCancelled(true);
+                }
             }
         }
 

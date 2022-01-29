@@ -6,6 +6,7 @@ import com.msicraft.consumefood.command.TabComplete;
 import com.msicraft.consumefood.command.custom_food_command;
 import com.msicraft.consumefood.events.ConsumeFoodEvents;
 import com.msicraft.consumefood.events.Custom_Food_Block_Place;
+import com.msicraft.consumefood.events.Custom_Food_Interact_Event;
 import com.msicraft.consumefood.events.Food_Interact_Event;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -109,6 +110,7 @@ public class ConsumeFood extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ConsumeFoodEvents(), this);
         getServer().getPluginManager().registerEvents(new Food_Interact_Event(), this);
         getServer().getPluginManager().registerEvents(new Custom_Food_Block_Place(), this);
+        getServer().getPluginManager().registerEvents(new Custom_Food_Interact_Event(), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Consume Food] Plugin Enable");
     }
 
@@ -176,11 +178,23 @@ public class ConsumeFood extends JavaPlugin {
         String random_uuid = UUID.randomUUID().toString();
         ArrayList<String> customfoodlist = new ArrayList<>(custom_food_list());
         for (String internal_name : customfoodlist) {
-            String value = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".value");
             String get_uuid = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".uuid");
             Material material = Material.valueOf(ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material"));
-            if (Material.PLAYER_HEAD.equals(material) && value != null && get_uuid == null) {
+            if (Material.PLAYER_HEAD.equals(material) && get_uuid == null) {
                 ConsumeFood.customfooddata.getConfig().set("Custom_Food." + internal_name + ".uuid", random_uuid);
+                ConsumeFood.customfooddata.saveConfig();
+            }
+        }
+    }
+
+
+    public void custom_food_uppercase() {
+        ArrayList<String> customfoodlist = new ArrayList<>(custom_food_list());
+        for (String internal_name : customfoodlist) {
+            String get_material_name = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material");
+            if (get_material_name != null) {
+                String upper_material_name = get_material_name.toUpperCase();
+                ConsumeFood.customfooddata.getConfig().set("Custom_Food." + internal_name + ".material", upper_material_name);
                 ConsumeFood.customfooddata.saveConfig();
             }
         }
@@ -207,10 +221,11 @@ public class ConsumeFood extends JavaPlugin {
         foodnamelist();
         buff_food_list();
         custom_food_list();
-        customfood_randomUUID();
         messageconfig = YamlConfiguration.loadConfiguration(messageconfigfile);
         custom_food_material();
         customfooddata.reloadConfig();
+        custom_food_uppercase();
+        customfood_randomUUID();
     }
 
 

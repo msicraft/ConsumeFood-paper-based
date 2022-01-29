@@ -1,7 +1,8 @@
 # If you don't need a message, please leave a blank.
 # You can use color code for messages.
-# (Available Placeholder: %time_left%, %max_foodlevel%. %max_saturation%)
+# (Available Placeholder: %time_left%, %max_foodlevel%. %max_saturation%, %custom_food_time_left%)
 #
+custom_food_cooldown: "Time left %custom_food_time_left%"
 cooldown: "Time left %time_left%"
 max_food_level: "&aFood level reached the maximum value of %max_foodlevel%."
 max_saturation: "&aSaturation reached the maximum value of %max_saturation%."

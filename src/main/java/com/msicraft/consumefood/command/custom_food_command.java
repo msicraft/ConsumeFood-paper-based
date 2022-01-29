@@ -71,13 +71,15 @@ public class custom_food_command implements CommandExecutor {
                         }
                         if (!(custom_food_skull.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING))) {
                             custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
-                            custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food");
+                            custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food_" + internal_name);
                         }
                         skullMeta.setLore(lore);
                         skull.setItemMeta(skullMeta);
                         for (int i = 0; i<amount ; i++) {
                             player.getInventory().addItem(skull);
                         }
+                    } else {
+                        player.sendMessage(ChatColor.RED+ "The value of " + ChatColor.GREEN + internal_name + ChatColor.RED +" does not exist");
                     }
                 } else {
                     ItemStack custom_food = new ItemStack(material, 1);
@@ -93,7 +95,7 @@ public class custom_food_command implements CommandExecutor {
                     }
                     if (!(custom_food_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"),PersistentDataType.STRING))) {
                         custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
-                        custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food");
+                        custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food_" + internal_name);
                     }
                     custom_food_meta.setLore(lore);
                     custom_food.setItemMeta(custom_food_meta);

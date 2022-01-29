@@ -28,23 +28,23 @@ public class Food_Interact_Event implements Listener {
 
     @EventHandler
     public void Food_Interact(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
+        boolean max_consumable = plugin.getConfig().getBoolean("Max_Consumable.Enabled");
         String foodnlist = String.valueOf(ConsumeFood.foodnamelist());
         String buffdebufffoodlist = String.valueOf(ConsumeFood.buff_food_list());
         String itemstack = e.getMaterial().name().toUpperCase();
-        String buffdebuffpotioneffect = String.valueOf(plugin.getConfig().getStringList("Buff-Debuff_Food." + itemstack + ".PotionEffect"));
-        double potioneffectchange = plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Chance");
-        int p_food_level = player.getFoodLevel();
-        int max_food_level = plugin.getConfig().getInt("MaxSetting.FoodLevel");
-        float max_saturation = (float) plugin.getConfig().getDouble("MaxSetting.Saturation");
-        boolean max_consumable = plugin.getConfig().getBoolean("Max_Consumable.Enabled");
-        long cooldown = plugin.getConfig().getLong("Max_Consumable.Cooldown");
-        String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("cooldown");
-        String max_foodlevel_path = ConsumeFood.plugin.getmessageconfig().getString("max_food_level");
-        String max_saturation_path = ConsumeFood.plugin.getmessageconfig().getString("max_saturation");
         if (max_consumable) {
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
                 if (foodnlist.contains(itemstack) || buffdebufffoodlist.contains(itemstack)) {
+                    Player player = e.getPlayer();
+                    String buffdebuffpotioneffect = String.valueOf(plugin.getConfig().getStringList("Buff-Debuff_Food." + itemstack + ".PotionEffect"));
+                    double potioneffectchange = plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Chance");
+                    int p_food_level = player.getFoodLevel();
+                    int max_food_level = plugin.getConfig().getInt("MaxSetting.FoodLevel");
+                    float max_saturation = (float) plugin.getConfig().getDouble("MaxSetting.Saturation");
+                    long cooldown = plugin.getConfig().getLong("Max_Consumable.Cooldown");
+                    String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("cooldown");
+                    String max_foodlevel_path = ConsumeFood.plugin.getmessageconfig().getString("max_food_level");
+                    String max_saturation_path = ConsumeFood.plugin.getmessageconfig().getString("max_saturation");
                     ItemStack get_item = e.getItem();
                     ItemMeta get_item_meta = Objects.requireNonNull(get_item).getItemMeta();
                     PersistentDataContainer get_item_id = get_item_meta.getPersistentDataContainer();
