@@ -1,6 +1,5 @@
 package com.msicraft.consumefood.events;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.msicraft.consumefood.ConsumeFood;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
