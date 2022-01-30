@@ -6,7 +6,7 @@
 # Set FoodLevel and Saturation values
 # default value = minecraft value
 #
-# Max Settings can change the maximum food level and duration.
+# Max Settings can change the maximum food level and saturation.
 # MaxSetting default value
 # MaxSetting:
 #   FoodLevel = 20
