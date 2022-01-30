@@ -31,7 +31,7 @@ commands:
     permission: consumefood.getsaturation
     permission-message: You do not have permission!
   consumefood:
-    description: dd
+    description: Consume Food Command
     usage: /<command>
     permission: consumefood.consumefood
     permission-message: You do not have permission!
@@ -44,5 +44,14 @@ permissions:
     default: op
   consumefood.setsaturation:
     description: Allow [Consume Food] Plugin Saturation Command
+    default: op
+  consumefood.gethunger:
+    description: Allow [Consume Food] Plugin gethunger Command
+    default: op
+  consumefood.getsaturation:
+    description: Allow [Consume Food] Plugin getsaturation Commnad
+    default: op
+  consumefood.consumefood:
+    description: Allow [Consume Food] Plugin consume Command
     default: op
 

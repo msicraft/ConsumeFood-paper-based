@@ -1,23 +1,26 @@
 # Custom Food
+# default customfood.yml = https://github.com/msicraft/ConsumeFood-paper-based/blob/master/src/main/resources/customfood.yml
+#
 # The material of custom_food is currently only supported for player_head or edible food.
 #
 # If a value exists when creating custom food with player_head,
 # a uuid is automatically generated when plugin is loaded or when using the reload command.
 # Do not modify the created uuid (Changing the uuid will not merge with anything created before the change.)
 ##
-##
 # If Max_Consumable is true, it allows you to eat food with a right click when the food level is 20 or higher.
-# If Custom_Food_Max_Consumable is false, the cooldown will be applied to custom food with material player_head.
 # But this doesn't play the food eating animation. So you can set cooldown.
+# If Custom_Food_Max_Consumable is false, the cooldown will be applied to custom food with material player_head.
 # This setting applies only to custom food.
 
 Custom_Food_Max_Consumable:
   Enabled: false
   Cooldown: 3
 
+
 # If Custom_Food_Block_Place is true, you can place custom food with material player_head
 Custom_Food_Block_Place:
   Enabled: false
+
 
 Custom_Food:
   food_1:
@@ -28,7 +31,6 @@ Custom_Food:
       - "&cTest 1.1"
     foodlevel: 1
     saturation: 1.1
-
   food_2:
     material: PLAYER_HEAD
     value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjhhMGJhNzhiODM1ZWM4NDYxNzUwZjdlYjkwYjg4OWRlMDkzMmU4YWI4N2I5YTdhZDc2YzM0M2EzMjI3YzA4MyJ9fX0=
@@ -41,7 +43,6 @@ Custom_Food:
     potion-effect:
       - ABSORPTION:4:120
     Chance: 1
-
   food_3:
     material: CARROT
     name: "&ctest food 3"
