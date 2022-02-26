@@ -11,6 +11,10 @@
 # But this doesn't play the food eating animation. So you can set cooldown.
 # If Custom_Food_Max_Consumable is false, the cooldown will be applied to custom food with material player_head.
 # This setting applies only to custom food.
+#
+# If you need custom model data, just add the data configuration.
+# data is used for custom model data
+#
 
 Custom_Food_Max_Consumable:
   Enabled: false
