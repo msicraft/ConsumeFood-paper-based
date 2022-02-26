@@ -55,3 +55,12 @@ Custom_Food:
       - ABSORPTION:1:10
       - REGENERATION:1:10
     Chance: 0.3
+  food_4:
+    material: diamond
+    data: 1
+    name: "&ctest food 4"
+    lore:
+      - "&aTest 4"
+      - "&fTest 4.4"
+    foodlevel: 0
+    saturation: 0

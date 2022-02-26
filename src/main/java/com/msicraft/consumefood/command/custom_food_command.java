@@ -18,6 +18,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import java.awt.print.PrinterGraphics;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -62,6 +64,12 @@ public class custom_food_command implements CommandExecutor {
                         playerprofile.setProperty(new ProfileProperty("textures", value));
                         skullMeta.setPlayerProfile(playerprofile);
                         PersistentDataContainer custom_food_skull = skullMeta.getPersistentDataContainer();
+                        String get_custom_model_data = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".data");
+                        int custom_model_data = 0;
+                        if (get_custom_model_data != null) {
+                            get_custom_model_data = get_custom_model_data.replaceAll("[^0-9]", "");
+                            custom_model_data = Integer.parseInt(get_custom_model_data);
+                        }
                         if (name == null) {
                             skullMeta.setDisplayName("");
                         } else {
@@ -74,6 +82,7 @@ public class custom_food_command implements CommandExecutor {
                             custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
                             custom_food_skull.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food_" + internal_name);
                         }
+                        skullMeta.setCustomModelData(custom_model_data);
                         skullMeta.setLore(lore);
                         skull.setItemMeta(skullMeta);
                         for (int i = 0; i<amount ; i++) {
@@ -86,6 +95,12 @@ public class custom_food_command implements CommandExecutor {
                     ItemStack custom_food = new ItemStack(material, 1);
                     ItemMeta custom_food_meta = custom_food.getItemMeta();
                     PersistentDataContainer custom_food_id = custom_food_meta.getPersistentDataContainer();
+                    String get_custom_model_data = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".data");
+                    int custom_model_data = 0;
+                    if (get_custom_model_data != null) {
+                        get_custom_model_data = get_custom_model_data.replaceAll("[^0-9]", "");
+                        custom_model_data = Integer.parseInt(get_custom_model_data);
+                    }
                     if (name == null) {
                         custom_food_meta.setDisplayName("");
                     } else {
@@ -98,6 +113,7 @@ public class custom_food_command implements CommandExecutor {
                         custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING, "msicraft_custom_food");
                         custom_food_id.set(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING, "msicraft_custom_food_" + internal_name);
                     }
+                    custom_food_meta.setCustomModelData(custom_model_data);
                     custom_food_meta.setLore(lore);
                     custom_food.setItemMeta(custom_food_meta);
                     for (int i = 0; i<amount ; i++) {

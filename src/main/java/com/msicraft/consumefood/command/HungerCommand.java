@@ -34,7 +34,9 @@ public class HungerCommand implements CommandExecutor {
             if (args.length == 2) {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 String S_target = String.valueOf(Bukkit.getPlayerExact(args[0]));
-                int hungervalue = Integer.parseInt(args[1]);
+                String get_value = args[1];
+                String only_number = get_value.replaceAll("[^0-9]", "");
+                int hungervalue = Integer.parseInt(only_number);
                 if (target == null) {
                     player.sendMessage(ChatColor.RED + S_target + " is not Online");
                 } else {
@@ -60,7 +62,9 @@ public class HungerCommand implements CommandExecutor {
             if (args.length == 2) {
                 Player target = Bukkit.getPlayerExact(args[0]);
                 String S_target = String.valueOf(Bukkit.getPlayerExact(args[0]));
-                float saturationvalue = Float.parseFloat((args[1]));
+                String get_value = args[1];
+                String only_number = get_value.replaceAll("[^0-9]", "");
+                float saturationvalue = Float.parseFloat(only_number);
                 if (target == null) {
                     player.sendMessage(ChatColor.RED + S_target + " is not Online");
                 }  else {
