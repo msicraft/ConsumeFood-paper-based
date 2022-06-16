@@ -8,7 +8,6 @@ import com.msicraft.consumefood.events.ConsumeFoodEvents;
 import com.msicraft.consumefood.events.Custom_Food_Block_Place;
 import com.msicraft.consumefood.events.Custom_Food_Interact_Event;
 import com.msicraft.consumefood.events.Food_Interact_Event;
-import net.kyori.adventure.text.ComponentLike;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -17,9 +16,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;

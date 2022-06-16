@@ -1,6 +1,7 @@
 package com.msicraft.consumefood.events;
 
 import com.msicraft.consumefood.ConsumeFood;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -39,24 +40,24 @@ public class ConsumeFoodEvents implements Listener {
         ItemMeta get_item_meta = e.getItem().getItemMeta();
         PersistentDataContainer get_item_id = get_item_meta.getPersistentDataContainer();
         if (foodnlist.contains(itemstack) && !get_item_meta.hasLore() && !(get_item_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING))) {
-            if (foodnlist.contains(player.getInventory().getItemInOffHand().getType().name().toUpperCase())) {
-                e.setCancelled(true);
-                player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
-                player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
-                e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
-            }  else {
+            if (foodnlist.contains(player.getInventory().getItemInMainHand().getType().name().toUpperCase())) {
                 e.setCancelled(true);
                 player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
                 player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
                 e.getPlayer().getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+            } else if (foodnlist.contains(player.getInventory().getItemInOffHand().getType().name().toUpperCase())) {
+                e.setCancelled(true);
+                player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
+                player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
+                e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
             }
         } else {
             if (buffdebufffoodlist.contains(itemstack) && !get_item_meta.hasLore() && !(get_item_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING))) {
-                if (buffdebufffoodlist.contains(player.getInventory().getItemInOffHand().getType().name().toUpperCase())) {
+                if (buffdebufffoodlist.contains(player.getInventory().getItemInMainHand().getType().name().toUpperCase())) {
                     e.setCancelled(true);
                     player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
                     player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Saturation")));
-                    e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
+                    e.getPlayer().getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
                     if (buffdebuffpotioneffect != null) {
                         if (randomchance.nextDouble() <= potioneffectchange) {
                             List<String> getPotionEffects = plugin.getConfig().getStringList("Buff-Debuff_Food." + itemstack + ".PotionEffect");
@@ -71,12 +72,11 @@ public class ConsumeFoodEvents implements Listener {
                             }
                         }
                     }
-                }
-                if (buffdebufffoodlist.contains(player.getInventory().getItemInMainHand().getType().name().toUpperCase())) {
+                } else if (buffdebufffoodlist.contains(player.getInventory().getItemInOffHand().getType().name().toUpperCase())) {
                     e.setCancelled(true);
                     player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
                     player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Saturation")));
-                    e.getPlayer().getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                    e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
                     if (buffdebuffpotioneffect != null) {
                         if (randomchance.nextDouble() <= potioneffectchange) {
                             List<String> getPotionEffects = plugin.getConfig().getStringList("Buff-Debuff_Food." + itemstack + ".PotionEffect");
@@ -103,6 +103,7 @@ public class ConsumeFoodEvents implements Listener {
             }
         }
     }
+
 
 
     // Custom Food (Excluding PLAYER_HEAD)
@@ -133,6 +134,21 @@ public class ConsumeFoodEvents implements Listener {
                         player.setFoodLevel(player.getFoodLevel() + food_level);
                         player.setSaturation(player.getSaturation() + saturation);
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                        List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                        if (!command_list.isEmpty()) {
+                            for (String get_command_list : command_list) {
+                                String [] commands = get_command_list.split(":");
+                                String sender = commands[0];
+                                String command = commands[1];
+                                if (sender.equals("player")) {
+                                    String replace_command = command.replaceAll("%player%", player.getName());
+                                    Bukkit.getServer().dispatchCommand(player, replace_command);
+                                } else if (sender.equals("console")) {
+                                    String replace_command = command.replaceAll("%player%", player.getName());
+                                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                }
+                            }
+                        }
                         if (!potioneffectlist.isEmpty()) {
                             if (randomchance.nextDouble() <= potioneffect_chance) {
                                 for (String effectlistf : potioneffectlist) {
@@ -148,13 +164,27 @@ public class ConsumeFoodEvents implements Listener {
                         }
                         break;
                     }
-                }
-                if (off_hand_material != Material.AIR) {
+                } else if (off_hand_material != Material.AIR) {
                     if (player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING)) {
                         e.setCancelled(true);
                         player.setFoodLevel(player.getFoodLevel() + food_level);
                         player.setSaturation(player.getSaturation() + saturation);
                         player.getInventory().getItemInOffHand().setAmount(player.getInventory().getItemInOffHand().getAmount() - 1);
+                        List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                        if (!command_list.isEmpty()) {
+                            for (String get_command_list : command_list) {
+                                String [] commands = get_command_list.split(":");
+                                String sender = commands[0];
+                                String command = commands[1];
+                                if (sender.equals("player")) {
+                                    String replace_command = command.replaceAll("%player%", player.getName());
+                                    Bukkit.getServer().dispatchCommand(player, replace_command);
+                                } else if (sender.equals("console")) {
+                                    String replace_command = command.replaceAll("%player%", player.getName());
+                                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                }
+                            }
+                        }
                         if (!potioneffectlist.isEmpty()) {
                             if (randomchance.nextDouble() <= potioneffect_chance) {
                                 for (String effectlistf : potioneffectlist) {

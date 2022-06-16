@@ -1,10 +1,7 @@
 package com.msicraft.consumefood.events;
 
 import com.msicraft.consumefood.ConsumeFood;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -88,6 +85,21 @@ public class Custom_Food_Interact_Event implements Listener {
                             player.setSaturation(player.getSaturation() + saturation);
                             player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                             player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                            List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                            if (!command_list.isEmpty()) {
+                                for (String get_command_list : command_list) {
+                                    String [] commands = get_command_list.split(":");
+                                    String sender = commands[0];
+                                    String command = commands[1];
+                                    if (sender.equals("player")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(player, replace_command);
+                                    } else if (sender.equals("console")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                    }
+                                }
+                            }
                             if (!potioneffectlist.isEmpty()) {
                                 if (randomchance.nextDouble() <= potioneffect_chance) {
                                     for (String effectlistf : potioneffectlist) {
@@ -107,6 +119,21 @@ public class Custom_Food_Interact_Event implements Listener {
                             player.setSaturation(player.getSaturation() + saturation);
                             player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                             player.getInventory().getItemInOffHand().setAmount((player.getInventory().getItemInOffHand().getAmount() - 1));
+                            List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                            if (!command_list.isEmpty()) {
+                                for (String get_command_list : command_list) {
+                                    String [] commands = get_command_list.split(":");
+                                    String sender = commands[0];
+                                    String command = commands[1];
+                                    if (sender.equals("player")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(player, replace_command);
+                                    } else if (sender.equals("console")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                    }
+                                }
+                            }
                             if (!potioneffectlist.isEmpty()) {
                                 if (randomchance.nextDouble() <= potioneffect_chance) {
                                     for (String effectlistf : potioneffectlist) {
@@ -130,6 +157,21 @@ public class Custom_Food_Interact_Event implements Listener {
                             player.setSaturation(player.getSaturation() + saturation);
                             player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                             player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                            List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                            if (!command_list.isEmpty()) {
+                                for (String get_command_list : command_list) {
+                                    String [] commands = get_command_list.split(":");
+                                    String sender = commands[0];
+                                    String command = commands[1];
+                                    if (sender.equals("player")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(player, replace_command);
+                                    } else if (sender.equals("console")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                    }
+                                }
+                            }
                             if (!potioneffectlist.isEmpty()) {
                                 if (randomchance.nextDouble() <= potioneffect_chance) {
                                     for (String effectlistf : potioneffectlist) {
@@ -149,6 +191,21 @@ public class Custom_Food_Interact_Event implements Listener {
                             player.setSaturation(player.getSaturation() + saturation);
                             player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                             player.getInventory().getItemInOffHand().setAmount((player.getInventory().getItemInOffHand().getAmount() - 1));
+                            List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                            if (!command_list.isEmpty()) {
+                                for (String get_command_list : command_list) {
+                                    String [] commands = get_command_list.split(":");
+                                    String sender = commands[0];
+                                    String command = commands[1];
+                                    if (sender.equals("player")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(player, replace_command);
+                                    } else if (sender.equals("console")) {
+                                        String replace_command = command.replaceAll("%player%", player.getName());
+                                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                    }
+                                }
+                            }
                             if (!potioneffectlist.isEmpty()) {
                                 if (randomchance.nextDouble() <= potioneffect_chance) {
                                     for (String effectlistf : potioneffectlist) {
@@ -201,6 +258,21 @@ public class Custom_Food_Interact_Event implements Listener {
                                     player.setSaturation(player.getSaturation() + saturation);
                                     player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                                     player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                                    List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                                    if (!command_list.isEmpty()) {
+                                        for (String get_command_list : command_list) {
+                                            String [] commands = get_command_list.split(":");
+                                            String sender = commands[0];
+                                            String command = commands[1];
+                                            if (sender.equals("player")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(player, replace_command);
+                                            } else if (sender.equals("console")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                            }
+                                        }
+                                    }
                                     if (!potioneffectlist.isEmpty()) {
                                         if (randomchance.nextDouble() <= potioneffect_chance) {
                                             for (String effectlistf : potioneffectlist) {
@@ -220,6 +292,21 @@ public class Custom_Food_Interact_Event implements Listener {
                                     player.setSaturation(player.getSaturation() + saturation);
                                     player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                                     player.getInventory().getItemInOffHand().setAmount((player.getInventory().getItemInOffHand().getAmount() - 1));
+                                    List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                                    if (!command_list.isEmpty()) {
+                                        for (String get_command_list : command_list) {
+                                            String [] commands = get_command_list.split(":");
+                                            String sender = commands[0];
+                                            String command = commands[1];
+                                            if (sender.equals("player")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(player, replace_command);
+                                            } else if (sender.equals("console")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                            }
+                                        }
+                                    }
                                     if (!potioneffectlist.isEmpty()) {
                                         if (randomchance.nextDouble() <= potioneffect_chance) {
                                             for (String effectlistf : potioneffectlist) {
@@ -291,6 +378,21 @@ public class Custom_Food_Interact_Event implements Listener {
                                 player.setSaturation(player.getSaturation() + saturation);
                                 player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                                 player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                                List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                                if (!command_list.isEmpty()) {
+                                    for (String get_command_list : command_list) {
+                                        String [] commands = get_command_list.split(":");
+                                        String sender = commands[0];
+                                        String command = commands[1];
+                                        if (sender.equals("player")) {
+                                            String replace_command = command.replaceAll("%player%", player.getName());
+                                            Bukkit.getServer().dispatchCommand(player, replace_command);
+                                        } else if (sender.equals("console")) {
+                                            String replace_command = command.replaceAll("%player%", player.getName());
+                                            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                        }
+                                    }
+                                }
                                 if (!potioneffectlist.isEmpty()) {
                                     if (randomchance.nextDouble() <= potioneffect_chance) {
                                         for (String effectlistf : potioneffectlist) {
@@ -304,21 +406,37 @@ public class Custom_Food_Interact_Event implements Listener {
                                         }
                                     }
                                 }
-                            }
-                            if (uuid.equals(get_skull_uuid) && off_hand_material != Material.AIR && player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING)) {
-                                player.setFoodLevel(player.getFoodLevel() + food_level);
-                                player.setSaturation(player.getSaturation() + saturation);
-                                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
-                                player.getInventory().getItemInOffHand().setAmount((player.getInventory().getItemInOffHand().getAmount() - 1));
-                                if (!potioneffectlist.isEmpty()) {
-                                    if (randomchance.nextDouble() <= potioneffect_chance) {
-                                        for (String effectlistf : potioneffectlist) {
-                                            String[] effectlist = effectlistf.split(":");
-                                            PotionEffectType listpotiontype = PotionEffectType.getByName(effectlist[0]);
-                                            int listpotionlvl = Integer.parseInt(effectlist[1]);
-                                            int listpotionduration = Integer.parseInt(effectlist[2]);
-                                            if (listpotiontype != null) {
-                                                player.addPotionEffect(new PotionEffect(listpotiontype, listpotionduration * 20, listpotionlvl - 1));
+                            } else {
+                                if (uuid.equals(get_skull_uuid) && off_hand_material != Material.AIR && player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING)) {
+                                    player.setFoodLevel(player.getFoodLevel() + food_level);
+                                    player.setSaturation(player.getSaturation() + saturation);
+                                    player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
+                                    player.getInventory().getItemInOffHand().setAmount((player.getInventory().getItemInOffHand().getAmount() - 1));
+                                    List<String> command_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".commands");
+                                    if (!command_list.isEmpty()) {
+                                        for (String get_command_list : command_list) {
+                                            String [] commands = get_command_list.split(":");
+                                            String sender = commands[0];
+                                            String command = commands[1];
+                                            if (sender.equals("player")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(player, replace_command);
+                                            } else if (sender.equals("console")) {
+                                                String replace_command = command.replaceAll("%player%", player.getName());
+                                                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), replace_command);
+                                            }
+                                        }
+                                    }
+                                    if (!potioneffectlist.isEmpty()) {
+                                        if (randomchance.nextDouble() <= potioneffect_chance) {
+                                            for (String effectlistf : potioneffectlist) {
+                                                String[] effectlist = effectlistf.split(":");
+                                                PotionEffectType listpotiontype = PotionEffectType.getByName(effectlist[0]);
+                                                int listpotionlvl = Integer.parseInt(effectlist[1]);
+                                                int listpotionduration = Integer.parseInt(effectlist[2]);
+                                                if (listpotiontype != null) {
+                                                    player.addPotionEffect(new PotionEffect(listpotiontype, listpotionduration * 20, listpotionlvl - 1));
+                                                }
                                             }
                                         }
                                     }
