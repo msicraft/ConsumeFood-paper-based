@@ -15,10 +15,19 @@
 # If you need custom model data, just add the data configuration.
 # data is used for custom model data
 #
+config-version: 2  # Don't Touch This
+
 
 Custom_Food_Max_Consumable:
   Enabled: false
-  Cooldown: 3
+
+# Available Type values: global, personal, disable
+# If Type is global, all food cooldown is applied as global_cooldown value
+# If Type is personal, the cooldown is applied for each food
+# If Type is disable, cooldown is disabled
+Custom_Food_Cooldown:
+  Type: 'disable'
+  Global_Cooldown: 3
 
 
 # If Custom_Food_Block_Place is true, you can place custom food with material player_head
@@ -74,3 +83,8 @@ Custom_Food:
     commands:
       - player:help
       - console:msg %player% test
+  food_6:
+    material: APPLE
+    name: "cooldown food"
+    foodlevel: 2
+    cooldown: 3

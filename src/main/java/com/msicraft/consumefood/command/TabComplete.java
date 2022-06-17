@@ -21,16 +21,23 @@ public class TabComplete implements TabCompleter {
             if (args.length == 1) {
                 List<String> arguments = new ArrayList<>();
                 arguments.add("get");
+                arguments.add("help");
 
                 return arguments;
             }
-            if (args.length == 2) {
+            if (args.length == 2 && args[0].equals("get")) {
                 List<String> custom_internal_name = new ArrayList<>();
                 Set<String> list = ConsumeFood.customfooddata.getConfig().getConfigurationSection("Custom_Food").getKeys(false);
                 for (String s : list) {
                     custom_internal_name.add(s);
                 }
                 return custom_internal_name;
+            }
+            if (args.length == 3 && args[0].equals("get")) {
+                List<String> arguments = new ArrayList<>();
+                arguments.add("<amount>");
+
+                return arguments;
             }
         }
 

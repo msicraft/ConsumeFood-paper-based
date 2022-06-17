@@ -21,7 +21,11 @@ import java.util.*;
 public class Custom_Food_Interact_Event implements Listener {
 
     Plugin plugin = ConsumeFood.getPlugin(ConsumeFood.class);
+
     private final Map<UUID, Long> cooldowns = new HashMap<UUID, Long>();
+    private final Map<UUID, String> custom_food_cooldown = new HashMap<UUID, String>();
+
+
     Random randomchance = new Random();
 
 
@@ -51,12 +55,19 @@ public class Custom_Food_Interact_Event implements Listener {
         if (get_item != null) {
             get_material = get_item.getType();
         }
+        //
         if (max_consumable) {
             //Consume food level is 20 or higher
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR) && check_custom_id && custom_material_list.contains(e.getItem().getType().name().toUpperCase()) && player.getFoodLevel() >= 20) {
                 long get_cooldown = ConsumeFood.customfooddata.getConfig().getLong("Custom_Food_Max_Consumable.Cooldown");
                 ArrayList<String> customfoodlist = new ArrayList<>(ConsumeFood.custom_food_list());
                 String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("custom_food_cooldown");
+                //
+                if (custom_food_cooldown.containsKey(player.getUniqueId())) {
+                    String custom_name_cooldown = custom_food_cooldown.get(player.getUniqueId());
+                }
+                String name_cooldowns = e.getItem().getType().name().toUpperCase() + ":" + System.currentTimeMillis();
+                custom_food_cooldown.put(player.getUniqueId(), e.getItem().getType().name().toUpperCase());
                 if (cooldowns.containsKey(player.getUniqueId())) {
                     if (cooldowns.get(player.getUniqueId()) > System.currentTimeMillis()) {
                         long timeleft = (cooldowns.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;

@@ -22,8 +22,11 @@ import java.util.*;
 public class Food_Interact_Event implements Listener {
 
     Plugin plugin = ConsumeFood.getPlugin(ConsumeFood.class);
-    Map<String, Long> cooldowns = new HashMap<String, Long>();
+
     Random randomchance = new Random();
+
+    private final Map<String, Long> personal_cooldown = new HashMap<String, Long>();
+    private final Map<UUID, Long> global_cooldown = new HashMap<UUID, Long>();
 
 
     @EventHandler
@@ -41,41 +44,43 @@ public class Food_Interact_Event implements Listener {
                     int p_food_level = player.getFoodLevel();
                     int max_food_level = plugin.getConfig().getInt("MaxSetting.FoodLevel");
                     float max_saturation = (float) plugin.getConfig().getDouble("MaxSetting.Saturation");
-                    long cooldown = plugin.getConfig().getLong("Max_Consumable.Cooldown");
-                    String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("cooldown");
                     String max_foodlevel_path = ConsumeFood.plugin.getmessageconfig().getString("max_food_level");
                     String max_saturation_path = ConsumeFood.plugin.getmessageconfig().getString("max_saturation");
                     ItemStack get_item = e.getItem();
                     ItemMeta get_item_meta = Objects.requireNonNull(get_item).getItemMeta();
                     PersistentDataContainer get_item_id = get_item_meta.getPersistentDataContainer();
                     boolean check_item_id = get_item_id.has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING);
-                    if (!check_item_id) {
-                        if (cooldowns.containsKey(player.getName()) && p_food_level >= 20) {
-                            if (cooldowns.get(player.getName()) > System.currentTimeMillis()) {
-                                long timeleft = (cooldowns.get(player.getName()) - System.currentTimeMillis()) / 1000;
+                    String get_cooldown_type = plugin.getConfig().getString("Cooldown.Type");
+                    if (get_cooldown_type == null) {
+                        get_cooldown_type = "disable";
+                    }
+                    if (get_cooldown_type.equals("global")) {
+                        long get_global_cooldown = plugin.getConfig().getLong("Cooldown.Global_Cooldown");
+                        if (global_cooldown.containsKey(player.getUniqueId())) {
+                            if (global_cooldown.get(player.getUniqueId()) > System.currentTimeMillis()) {
+                                String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("global_cooldown");
+                                long global_timeleft = (global_cooldown.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
                                 if (cooldown_path != null) {
-                                    cooldown_path = cooldown_path.replaceAll("%time_left%", String.valueOf(timeleft));
+                                    cooldown_path = cooldown_path.replaceAll("%global_time_left%", String.valueOf(global_timeleft));
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
                                 }
                                 return;
                             }
                         }
-                        cooldowns.put(player.getName(), System.currentTimeMillis() + (cooldown * 1000));
-                    }
-                    if (foodnlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
-                        if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
-                            player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
-                            player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
-                            player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
-                            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
-                        } else {
-                            player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
-                            player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
-                            player.getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
-                            player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
-                        }
-                    } else {
-                        if (buffdebufffoodlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
+                        global_cooldown.put(player.getUniqueId(), System.currentTimeMillis() + (get_global_cooldown * 1000));
+                        if (foodnlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
+                            if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
+                                player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
+                                player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
+                                player.getInventory().getItemInMainHand().setAmount(e.getPlayer().getInventory().getItemInMainHand().getAmount() - 1);
+                                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
+                            } else if (player.getInventory().getItemInOffHand().getType().name().toUpperCase().equals(itemstack)){
+                                player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Food." + itemstack + ".FoodLevel"));
+                                player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Food." + itemstack + ".Saturation")));
+                                player.getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
+                                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
+                            }
+                        } else if (buffdebufffoodlist.contains(itemstack) && p_food_level >= 20 && !check_item_id) {
                             if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
                                 player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
                                 player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Saturation")));
@@ -116,6 +121,8 @@ public class Food_Interact_Event implements Listener {
                                 }
                             }
                         }
+                    } else if (get_cooldown_type.equals("personal")) {
+
                     }
                     if (player.getFoodLevel() >= max_food_level) {
                         player.setFoodLevel(max_food_level);

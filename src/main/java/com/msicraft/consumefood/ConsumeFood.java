@@ -92,13 +92,22 @@ public class ConsumeFood extends JavaPlugin {
         customfooddata = new CustomFood_Data(this);
         plugin = this;
         final int configVersion = plugin.getConfig().contains("config-version", true) ? plugin.getConfig().getInt("config-version") : -1;
-        if (configVersion != 2) {
+        final int custom_config_version = customfooddata.getConfig().contains("config-version", true) ? customfooddata.getConfig().getInt("config-version") : -1;
+        if (configVersion != 3) {
             getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Consume Food] You are using the old config");
             getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Consume Food] Created the latest config.yml after replacing the old config.yml with config_old.yml");
             replaceconfig();
             createFiles();
         } else {
             getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Consume Food] You are using the latest version of config.yml");
+        }
+        if (custom_config_version != 2) {
+            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Consume Food] You are using the old customfood config");
+            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Consume Food] Created the latest customfood.yml after replacing the old customfood.yml with customfood_old.yml");
+            replace_customfood_config();
+            customfooddata = new CustomFood_Data(this);
+        } else {
+            getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Consume Food] You are using the latest version of customfood.yml");
         }
         reload_files();
         getCommand("hunger").setExecutor(new HungerCommand());
@@ -210,6 +219,16 @@ public class ConsumeFood extends JavaPlugin {
         File config_old = new File(getDataFolder(),"config_old-" + dateFormat.format(date) + ".yml");
         file.renameTo(config_old);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Consume Food] Plugin replaced the old config.yml with config_old.yml and created a new config.yml");
+    }
+
+    public void replace_customfood_config() {
+        File file = new File(getDataFolder(), "customfood.yml");
+        this.config = YamlConfiguration.loadConfiguration(file);
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        File customfood_config_old = new File(getDataFolder(),"customfood_old-" + dateFormat.format(date) + ".yml");
+        file.renameTo(customfood_config_old);
+        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[Consume Food] Plugin replaced the old customfood.yml with customfood_old.yml and created a new customfood.yml");
     }
 
     public void create_files() {

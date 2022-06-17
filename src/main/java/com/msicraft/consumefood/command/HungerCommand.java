@@ -88,11 +88,6 @@ public class HungerCommand implements CommandExecutor {
             if (args.length == 1) {
                 Player gettargetfoodlevel = Bukkit.getPlayerExact(args[0]);
                 String S_target = args[0];
-                String a = String.valueOf(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().getKeys());
-                String a2 = String.valueOf(player.getInventory().getItemInOffHand().getItemMeta().getPersistentDataContainer().getKeys());
-                player.sendMessage("test");
-                player.sendMessage("main: " + a);
-                player.sendMessage("off: " + a2);
                 if (gettargetfoodlevel != null) {
                     int targetfoodlevel = gettargetfoodlevel.getFoodLevel();
                     player.sendMessage(ChatColor.GREEN + S_target + " Food Level is " + targetfoodlevel);
