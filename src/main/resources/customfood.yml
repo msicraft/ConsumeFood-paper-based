@@ -87,4 +87,4 @@ Custom_Food:
     material: APPLE
     name: "cooldown food"
     foodlevel: 2
-    cooldown: 3
+    Cooldown: 3

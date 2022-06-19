@@ -65,6 +65,9 @@ public class custom_food_command implements CommandExecutor {
                             ArrayList<String> lore = new ArrayList<>();
                             List<String> lore_list = ConsumeFood.customfooddata.getConfig().getStringList("Custom_Food." + internal_name + ".lore");
                             String get_material = ConsumeFood.customfooddata.getConfig().getString("Custom_Food." + internal_name + ".material");
+                            if (get_material != null && get_material.equals("air")) {
+                                get_material = "STONE";
+                            }
                             Material material = Material.valueOf(get_material);
                             if (Material.PLAYER_HEAD.equals(material)) {
                                 if (value != null) {

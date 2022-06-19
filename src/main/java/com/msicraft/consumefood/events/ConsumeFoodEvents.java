@@ -382,7 +382,7 @@ public class ConsumeFoodEvents implements Listener {
                     Material off_hand_material = player.getInventory().getItemInOffHand().getType();
                     for (String internal_name : customfoodlist) {
                         if (get_item_id.has(new NamespacedKey(ConsumeFood.getPlugin(), internal_name), PersistentDataType.STRING)) {
-                            long get_personal_cooldown = ConsumeFood.customfooddata.getConfig().getLong("Custom_Food." + internal_name + ".cooldown");
+                            long get_personal_cooldown = ConsumeFood.customfooddata.getConfig().getLong("Custom_Food." + internal_name + ".Cooldown");
                             String cooldown_key = player.getUniqueId() + internal_name;
                             if (custom_food_personal_cooldown.containsKey(cooldown_key)) {
                                 if (custom_food_personal_cooldown.get(cooldown_key) > System.currentTimeMillis()) {

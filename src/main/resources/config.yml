@@ -41,7 +41,7 @@ Max_Consumable:
 # If Type is personal, the cooldown is applied for each food
 # If Type is disable, cooldown is disabled
 Cooldown:
-  Type: "disable"
+  Type: 'disable'
   Global_Cooldown: 3
 
 
