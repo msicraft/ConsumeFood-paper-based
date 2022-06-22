@@ -600,7 +600,7 @@ public class Custom_Food_Interact_Event implements Listener {
             }
         } else {
             //Consume food level is 19 or lower
-            if (e.getAction() == Action.RIGHT_CLICK_AIR && player.getFoodLevel() < 19 && check_custom_id) {
+            if (e.getAction() == Action.RIGHT_CLICK_AIR && player.getFoodLevel() < 20 && check_custom_id) {
                 if (get_cooldown_type.equals("global")) {
                     long get_global_cooldown = ConsumeFood.customfooddata.getConfig().getLong("Custom_Food_Cooldown.Global_Cooldown");
                     if (custom_food_global_cooldown.containsKey(player.getUniqueId())) {

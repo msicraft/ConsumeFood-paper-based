@@ -1,7 +1,6 @@
 # Custom Food
 # default customfood.yml = https://github.com/msicraft/ConsumeFood-paper-based/blob/master/src/main/resources/customfood.yml
 #
-# The material of custom_food is currently only supported for player_head or edible food.
 #
 # If a value exists when creating custom food with player_head,
 # a uuid is automatically generated when plugin is loaded or when using the reload command.
@@ -84,7 +83,7 @@ Custom_Food:
       - player:help
       - console:msg %player% test
   food_6:
-    material: APPLE
+    material: STONE
     name: "cooldown food"
     foodlevel: 2
     Cooldown: 3
