@@ -6,7 +6,7 @@
 
     <groupId>com.msicraft</groupId>
     <artifactId>ConsumeFood</artifactId>
-    <version>1.5</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>ConsumeFood</name>
