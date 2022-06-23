@@ -74,6 +74,19 @@ public class ConsumeFoodEvents implements Listener {
                     e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
                 }
             } else if (buffdebufffoodlist.contains(itemstack) && !get_item_meta.hasLore() && !check_id) {
+                if (global_cooldown.containsKey(player.getUniqueId())) {
+                    if (global_cooldown.get(player.getUniqueId()) > System.currentTimeMillis()) {
+                        String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("global_cooldown");
+                        long global_timeleft = (global_cooldown.get(player.getUniqueId()) - System.currentTimeMillis()) / 1000;
+                        if (cooldown_path != null) {
+                            cooldown_path = cooldown_path.replaceAll("%global_time_left%", String.valueOf(global_timeleft));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
+                        }
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+                global_cooldown.put(player.getUniqueId(), System.currentTimeMillis() + (get_global_cooldown * 1000));
                 if (buffdebufffoodlist.contains(player.getInventory().getItemInMainHand().getType().name().toUpperCase())) {
                     e.setCancelled(true);
                     player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
@@ -144,6 +157,22 @@ public class ConsumeFoodEvents implements Listener {
                     e.getPlayer().getInventory().getItemInOffHand().setAmount(e.getPlayer().getInventory().getItemInOffHand().getAmount() - 1);
                 }
             } else if (buffdebufffoodlist.contains(itemstack) && !get_item_meta.hasLore() && !check_id) {
+                String get_uuid_food = player.getUniqueId() + ":" + itemstack;
+                long get_personal_cooldown = plugin.getConfig().getLong("Buff-Debuff_Food." + itemstack + ".Cooldown");
+                if (personal_cooldown.containsKey(get_uuid_food)) {
+                    if (personal_cooldown.get(get_uuid_food) > System.currentTimeMillis()) {
+                        String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("personal_cooldown");
+                        long timeleft = (personal_cooldown.get(get_uuid_food) - System.currentTimeMillis()) / 1000;
+                        if (cooldown_path != null) {
+                            cooldown_path = cooldown_path.replaceAll("%personal_time_left%", String.valueOf(timeleft));
+                            cooldown_path = cooldown_path.replaceAll("%food_name%", e.getItem().getItemMeta().getDisplayName());
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
+                        }
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+                personal_cooldown.put(get_uuid_food, System.currentTimeMillis() + (get_personal_cooldown * 1000));
                 if (buffdebufffoodlist.contains(player.getInventory().getItemInMainHand().getType().name().toUpperCase())) {
                     e.setCancelled(true);
                     player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));

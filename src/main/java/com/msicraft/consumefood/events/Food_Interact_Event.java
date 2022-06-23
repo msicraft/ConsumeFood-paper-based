@@ -160,6 +160,22 @@ public class Food_Interact_Event implements Listener {
                                 player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 1);
                             }
                         } else if (buffdebufffoodlist.contains(itemstack) && p_food_level >= 20) {
+                            String buff_debuff_get_uuid_food = player.getUniqueId() + ":" + itemstack;
+                            long buff_debuff_get_personal_cooldown = plugin.getConfig().getLong("Buff-Debuff_Food." + itemstack + ".Cooldown");
+                            if (personal_cooldown.containsKey(buff_debuff_get_uuid_food)) {
+                                if (personal_cooldown.get(buff_debuff_get_uuid_food) > System.currentTimeMillis()) {
+                                    String cooldown_path = ConsumeFood.plugin.getmessageconfig().getString("personal_cooldown");
+                                    long timeleft = (personal_cooldown.get(buff_debuff_get_uuid_food) - System.currentTimeMillis()) / 1000;
+                                    if (cooldown_path != null) {
+                                        cooldown_path = cooldown_path.replaceAll("%personal_time_left%", String.valueOf(timeleft));
+                                        cooldown_path = cooldown_path.replaceAll("%food_name%", e.getItem().getItemMeta().getDisplayName());
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldown_path));
+                                    }
+                                    e.setCancelled(true);
+                                    return;
+                                }
+                            }
+                            personal_cooldown.put(buff_debuff_get_uuid_food, System.currentTimeMillis() + (buff_debuff_get_personal_cooldown * 1000));
                             if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().equals(itemstack)) {
                                 player.setFoodLevel(player.getFoodLevel() + plugin.getConfig().getInt("Buff-Debuff_Food." + itemstack + ".FoodLevel"));
                                 player.setSaturation((float) (player.getSaturation() + plugin.getConfig().getDouble("Buff-Debuff_Food." + itemstack + ".Saturation")));
