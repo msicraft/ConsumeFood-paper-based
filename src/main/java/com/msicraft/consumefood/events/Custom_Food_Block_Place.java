@@ -3,10 +3,12 @@ package com.msicraft.consumefood.events;
 import com.msicraft.consumefood.ConsumeFood;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class Custom_Food_Block_Place implements Listener {
                 if (block_material == Material.PLAYER_WALL_HEAD && item_lore != null && lore.containsAll(item_lore)) {
                     e.setCancelled(true);
                 }
+            }
+            if (get_item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(ConsumeFood.getPlugin(), "custom_id"), PersistentDataType.STRING)) {
+                e.setCancelled(true);
             }
         }
 
